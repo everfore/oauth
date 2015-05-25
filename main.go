@@ -21,7 +21,7 @@ func init() {
 
 func main() {
 	log.Println("ready...")
-	http.HandleFunc("/", root)
+	http.HandleFunc("/", site)
 	http.HandleFunc("/signin", signin)
 	http.HandleFunc("/site", site)
 	http.HandleFunc("/callback", callback)

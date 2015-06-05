@@ -88,7 +88,8 @@ func callback(rw http.ResponseWriter, req *http.Request) {
 		avatar, ok := ret["avatar_url"]
 		if ok {
 			avatar_url := fmt.Sprintf("%v", avatar)
-			t, err := template.ParseFiles("index.tpl")
+			t := template.New("index.tpl")
+			t, err := t.ParseFiles("index.tpl")
 			if nil != err {
 				rw.Write(b)
 				return

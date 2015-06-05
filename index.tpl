@@ -4,7 +4,7 @@
 	<title>OAUTHS</title>
 </head>
 <body>
-
-<div>head:<img src="{{.avatar_url}}" alt="{{.name}}" /></div>
+<h1>Githut Oauth2</h1>
+<div><img src="{{.avatar_url}}"/></div>
 </body>
 </html>

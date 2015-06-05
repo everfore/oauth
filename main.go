@@ -94,6 +94,7 @@ func callback(rw http.ResponseWriter, req *http.Request) {
 				rw.Write(b)
 				return
 			}
+			rw.Write(b)
 			t.Execute(rw, avatar_url)
 		}
 	}

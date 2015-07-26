@@ -6,9 +6,9 @@ WORKDIR /gopath/app
 ENV GOPATH /gopath/app
 ADD . /gopath/app/
 
-RUN go get -u github.com/shaalx/echo
-RUN go install github.com/shaalx/echo
-#RUN go build -o echo
-RUN ls
+RUN go get -u github.com/everfore/oauth
+RUN go install github.com/everfore/oauth
+
 EXPOSE 80
-CMD ["/gopath/app/bin/echo"]
+
+CMD ["/gopath/app/bin/oauth"]

@@ -2,10 +2,8 @@ package main
 
 import (
 	"encoding/json"
-	// "fmt"
 	. "github.com/everfore/oauth/oauth2"
 	"html/template"
-	// "io/ioutil"
 	"log"
 	"net/http"
 	"time"

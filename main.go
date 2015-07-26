@@ -2,17 +2,18 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
-	. "github.com/shaalx/echo/oauth2"
+	// "fmt"
+	. "github.com/everfore/oauth/oauth2"
 	"html/template"
+	// "io/ioutil"
 	"log"
 	"net/http"
 	"time"
 )
 
 var (
-	usage = []byte(`<h1>This is a app from@zhuulx</h1><a href="https://github.com/zhuulx/oauth" ><h1>https://github.com/zhuulx/oauth</h1></a>` + "\n" + `
-		<a href="/signin" ><h1>GITHUB OAUTH2</h1></a>`)
+	usage = []byte(`<a href="https://github.com/everfore/oauth" ><h1>@oauth2</h1></a>` + "\n" + `
+		<a href="/signin" ><h1>@sign in#github#</h1></a>`)
 	OA *OAGithub
 )
 
@@ -22,35 +23,17 @@ func init() {
 
 func main() {
 	log.Println("ready...")
-	http.HandleFunc("/", site)
+	http.HandleFunc("/", root)
 	http.HandleFunc("/signin", signin)
-	http.HandleFunc("/site", site)
 	http.HandleFunc("/callback", callback)
 	err := http.ListenAndServe(":80", nil)
 	if check_err(err) {
 		return
 	}
-	log.Println("go...")
-}
-
-func echo(rw http.ResponseWriter, req *http.Request) {
-	rw.Write([]byte("[ECHO]"))
-	q := req.URL.Query()
-	b, err := json.Marshal(q)
-	if check_err(err) {
-		rw.Write([]byte("echo ： error"))
-		return
-	}
-	rw.Write(b)
 }
 
 func root(rw http.ResponseWriter, req *http.Request) {
-	log.Println(req.URL)
-	rw.Write([]byte("[ROOT]" + time.Now().String()))
-}
-
-func site(rw http.ResponseWriter, req *http.Request) {
-	rw.Write([]byte(usage))
+	rw.Write(usage)
 }
 
 func signin(rw http.ResponseWriter, req *http.Request) {
@@ -58,22 +41,25 @@ func signin(rw http.ResponseWriter, req *http.Request) {
 }
 
 func callback(rw http.ResponseWriter, req *http.Request) {
-	b := OA.NextStep(req)
+	log.Printf("%s\n", req.RemoteAddr)
+	b, err := OA.NextStep(req)
+	if nil != err {
+		rw.Write([]byte(err.Error()))
+		return
+	}
 	var ret map[string]interface{}
-	err := json.Unmarshal(b, &ret)
+	err = json.Unmarshal(b, &ret)
 	if nil == err {
-		avatar, ok := ret["avatar_url"]
-		if ok {
-			avatar_url := fmt.Sprintf("%v", avatar)
-			t := template.New("index.tpl")
-			t, err := t.ParseFiles("index.tpl")
-			if nil != err {
-				rw.Write(b)
-				return
-			}
-			rw.Write(b)
-			t.Execute(rw, avatar_url)
+		t := template.New("index.html")
+		t, err := t.ParseFiles("index.html")
+		if nil != err {
+			return
 		}
+		now := time.Now().String()
+		ret["now"] = now
+		t.Execute(rw, ret)
+	} else {
+		rw.Write([]byte(err.Error()))
 	}
 }
 

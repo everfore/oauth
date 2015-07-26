@@ -2,7 +2,7 @@ package oauth2
 
 import (
 	"encoding/json"
-	// "errors"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -58,13 +58,11 @@ func randomStr() string {
 func (oa *OAGithub) AuthCode(req *http.Request) (code string, err error) {
 	url_ := req.URL
 	q := url_.Query()
-	// state := q.Get("state")
-	// fmt.Println(state)
-	// fmt.Println(oa.state)
-	// if _, ok := oa.state[state]; !ok {
-	// 	return "", errors.New("SCRF Attack!")
-	// }
-	// delete(oa.state, state)
+	state := q.Get("state")
+	if _, ok := oa.state[state]; !ok {
+		return "", errors.New("SCRF Attack!")
+	}
+	delete(oa.state, state)
 	code = q.Get("code")
 	return code, nil
 }
@@ -124,18 +122,20 @@ func (oa *OAGithub) UserInfo(access_token string) ([]byte, error) {
 	return b, nil
 }
 
-func (oa *OAGithub) NextStep(req *http.Request) []byte {
+func (oa *OAGithub) NextStep(req *http.Request) ([]byte, error) {
 	code, err := oa.AuthCode(req)
 	if nil != err {
-		return []byte(err.Error())
+		return nil, err
 	}
+	fmt.Printf("code :  %s\n", code)
 	token, err := oa.AccessToken(code)
 	if nil != err {
-		return []byte(err.Error())
+		return nil, err
 	}
+	fmt.Printf("token :  %s\n", token)
 	b, err := oa.UserInfo(token)
 	if nil != err {
-		return []byte(err.Error())
+		return nil, err
 	}
-	return b
+	return b, nil
 }

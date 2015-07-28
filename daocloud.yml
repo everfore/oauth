@@ -9,8 +9,8 @@ env:
     - GOPATH = "/"
 
 install:
-    go get github.com/revel/cmd/revel
-    revel
+    - go get github.com/revel/cmd/revel
+    - revel
     # - echo $MYENV
     # - echo "This is an install segment"
     # - echo "Here, we usually run scripts to setup a base environment"

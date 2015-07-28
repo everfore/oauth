@@ -28,4 +28,5 @@ script:
     # - ping -c 2 redis
     # - ping baidu.com &
     - curl http://localhost:9000
+    - ping baidu.com -n 3
     - ping google.com -n 3

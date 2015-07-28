@@ -2,7 +2,7 @@ package oauth2
 
 import (
 	"encoding/json"
-	"errors"
+	// "errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"

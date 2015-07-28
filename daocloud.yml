@@ -9,7 +9,6 @@ env:
 install:
     - echo "This is an install segment"
     - sudo apt-get -y install curl
-    # - echo "Here, we usually run scripts to setup a base environment"
 
 before_script:
     - mkdir -p gopath
@@ -17,16 +16,13 @@ before_script:
     - export PATH=$GOPATH/bin:$PATH
     - go env
     - go get github.com/revel/cmd/revel
-    - revel new app
-    - revel run app &
-    # - echo "This is an before_script segment"
-    # - echo "Here, we usually run scripts to prepare our test"
 
 script:
     # - ping -c 2 mongodb
     # - ping -c 2 mysql
     # - ping -c 2 redis
-    # - ping baidu.com &
+    - revel new app
+    - revel run app &
+    - sleep 5
+    - curl https://www.baidu.com
     - curl http://localhost:9000
-    - ping www.baidu.com -n 3
-    # - ping google.com -n 3

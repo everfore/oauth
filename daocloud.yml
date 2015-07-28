@@ -6,10 +6,10 @@ services:
 
 env:
     - MYENV = "hello"
-    - GOPATH = "/"
     - export GOPATH=$GOROOT
-
+    - source GOPATH=$GOROOT
 install:
+    - echo $GOPATH
     - go env
     - go get github.com/revel/cmd/revel
     - revel

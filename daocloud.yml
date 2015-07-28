@@ -7,6 +7,7 @@ services:
 env:
     - MYENV = "hello"
     - GOPATH = "/"
+    - export GOPATH=$GOROOT
 
 install:
     - go env

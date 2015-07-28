@@ -17,7 +17,7 @@ before_script:
     - echo $GOPATH
     - go env
     - go get github.com/revel/cmd/revel
-    - revel
+    - $GOPATH/bin/revel
     # - echo "This is an before_script segment"
     # - echo "Here, we usually run scripts to prepare our test"
 

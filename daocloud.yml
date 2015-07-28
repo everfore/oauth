@@ -5,15 +5,10 @@ services:
     # - redis
 
 env:
-    - MYENV = "hello"
-    - GOPATH = /usr/local/go
-    - GOPATH2 = /usr/local/go
-    - export GOPATH=$GOROOT
-    - source GOPATH=$GOROOT
+    - GOPATH = /go
 install:
-    - echo MYENV
+    - echo GOPATH
     - echo $GOPATH
-    - echo $GOPATH2
     - go env
     - go get github.com/revel/cmd/revel
     - revel

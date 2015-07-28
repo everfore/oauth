@@ -12,7 +12,7 @@ install:
     # - echo "Here, we usually run scripts to setup a base environment"
 
 before_script:
-    - echo GOPATH
+    - ls
     - echo $GOPATH
     - go env
     - go get github.com/revel/cmd/revel

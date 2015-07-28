@@ -8,6 +8,7 @@ env:
     - GOPATH = /gopath
 install:
     - echo "This is an install segment"
+    - sudo apt-get -y install curl
     # - echo "Here, we usually run scripts to setup a base environment"
 
 before_script:
@@ -25,5 +26,6 @@ script:
     # - ping -c 2 mongodb
     # - ping -c 2 mysql
     # - ping -c 2 redis
-    - ping baidu.com &
+    # - ping baidu.com &
+    - curl http://localhost:9000
     - ping google.com

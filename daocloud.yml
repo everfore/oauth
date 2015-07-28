@@ -13,23 +13,16 @@ install:
 before_script:
     - mkdir -p gopath
     - export GOPATH=/gopath
-    - ls
-    - echo $GOPATH
+    - export PATH=$GOPATH/bin:$PATH
     - go env
     - go get github.com/revel/cmd/revel
-    - $GOPATH/bin/revel
+    - revel new app
+    - revel run app &
     # - echo "This is an before_script segment"
     # - echo "Here, we usually run scripts to prepare our test"
 
 script:
-    # - echo $MYENV
-    # - echo "This is an script segment"
-    # - echo "Run test cases here"
-    # - echo ""
-    # - echo "Below shows how to use services"
     - ping -c 2 mongodb
     # - ping -c 2 mysql
     # - ping -c 2 redis
-    - ls
-    - cd $GOPATH
-    - ls
+    # - ping

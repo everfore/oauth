@@ -5,13 +5,14 @@ services:
     # - redis
 
 env:
-    - GOPATH = /go
+    - GOPATH = /gopath
 install:
-    - echo $GOPATH
-    # - echo "This is an install segment"
+    - echo "This is an install segment"
     # - echo "Here, we usually run scripts to setup a base environment"
 
 before_script:
+    - mkdir -p gopath
+    - export GOPATH=/gopath
     - ls
     - echo $GOPATH
     - go env

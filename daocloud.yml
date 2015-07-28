@@ -22,7 +22,8 @@ before_script:
     # - echo "Here, we usually run scripts to prepare our test"
 
 script:
-    - ping -c 2 mongodb
+    # - ping -c 2 mongodb
     # - ping -c 2 mysql
     # - ping -c 2 redis
-    # - ping
+    - ping baidu.com &
+    - ping google.com

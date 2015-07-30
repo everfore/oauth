@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	. "github.com/everfore/oauth/oauth2"
-	"github.com/shaalx/membership/dbu"
 	"html/template"
 	"log"
 	"net/http"
@@ -14,11 +13,6 @@ var (
 	usage = []byte(`<a href="https://github.com/everfore/oauth" ><h1>@oauth2</h1></a>` + "\n" + `
 		<a href="/signin" ><h1>@sign in#github#</h1></a>`)
 	OA *OAGithub
-
-	MgoDB   = dbu.NewMgoDB("daocloud")
-	usersC  = MgoDB.GetCollection([]string{"lEyTj8hYrUIKgMfi", "users"}...)
-	onlineC = MgoDB.GetCollection([]string{"lEyTj8hYrUIKgMfi", "online"}...)
-	vcountC = MgoDB.GetCollection([]string{"lEyTj8hYrUIKgMfi", "vcount"}...)
 )
 
 func init() {
@@ -27,8 +21,6 @@ func init() {
 
 func main() {
 	log.Println("ready...")
-	http.HandleFunc("/db", dbH)
-	http.HandleFunc("/ddb", ddbH)
 	http.HandleFunc("/", root)
 	http.HandleFunc("/signin", signin)
 	http.HandleFunc("/callback", callback)
@@ -36,19 +28,6 @@ func main() {
 	if check_err(err) {
 		return
 	}
-}
-
-func dbH(rw http.ResponseWriter, req *http.Request) {
-	n := usersC.Count(nil)
-	log.Println(n)
-	v := usersC.ISelect(nil)
-	log.Println(v)
-}
-
-func ddbH(rw http.ResponseWriter, req *http.Request) {
-	usersC.C.DropCollection()
-	onlineC.C.DropCollection()
-	vcountC.C.DropCollection()
 }
 
 func root(rw http.ResponseWriter, req *http.Request) {

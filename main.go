@@ -27,9 +27,8 @@ func init() {
 
 func main() {
 	log.Println("ready...")
-	usersC.C.DropCollection()
-	onlineC.C.DropCollection()
-	vcountC.C.DropCollection()
+	http.HandleFunc("/db", dbH)
+	http.HandleFunc("/ddb", ddbH)
 	http.HandleFunc("/", root)
 	http.HandleFunc("/signin", signin)
 	http.HandleFunc("/callback", callback)
@@ -37,6 +36,19 @@ func main() {
 	if check_err(err) {
 		return
 	}
+}
+
+func dbH(rw http.ResponseWriter, req *http.Request) {
+	n := usersC.Count(nil)
+	log.Println(n)
+	v := usersC.ISelect(nil)
+	log.Println(v)
+}
+
+func ddbH(rw http.ResponseWriter, req *http.Request) {
+	usersC.C.DropCollection()
+	onlineC.C.DropCollection()
+	vcountC.C.DropCollection()
 }
 
 func root(rw http.ResponseWriter, req *http.Request) {

@@ -9,7 +9,7 @@ var (
 )
 
 func init() {
-	oa = NewOAGithub("8ba2991113e68b4805c1", "secret", "user")
+	oa = NewOAGithub("8ba2991113e68b4805c1", "secret", "user", "http://bookmark.daoapp.io/callback")
 }
 
 func TestAuth(t *testing.T) {

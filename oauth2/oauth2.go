@@ -22,13 +22,13 @@ type OAGithub struct {
 	state            map[string]string
 }
 
-func NewOAGithub(client_id, client_secret, scope string) *OAGithub {
+func NewOAGithub(client_id, client_secret, scope, redirect_uri string) *OAGithub {
 	return &OAGithub{
 		client_id:        client_id,
 		client_secret:    client_secret,
 		scope:            scope,
 		auth_uri:         "https://github.com/login/oauth/authorize",
-		redirect_uri:     "http://shaalx-oauths.daoapp.io/callback",
+		redirect_uri:     redirect_uri,
 		access_token_uri: "https://github.com/login/oauth/access_token",
 		user_info_uri:    "https://api.github.com/user?access_token",
 		state:            make(map[string]string),

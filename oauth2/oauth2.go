@@ -140,3 +140,21 @@ func (oa *OAGithub) NextStep(req *http.Request) ([]byte, error) {
 	}
 	return b, nil
 }
+
+func (oa *OAGithub) NextStepWithToken(req *http.Request) ([]byte, string, error) {
+	code, err := oa.AuthCode(req)
+	if nil != err {
+		return nil, "", err
+	}
+	fmt.Printf("code :  %s\n", code)
+	token, err := oa.AccessToken(code)
+	if nil != err {
+		return nil, "", err
+	}
+	fmt.Printf("token :  %s\n", token)
+	b, err := oa.UserInfo(token)
+	if nil != err {
+		return nil, "", err
+	}
+	return b, token, nil
+}
